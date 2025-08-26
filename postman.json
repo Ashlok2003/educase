@@ -1,0 +1,89 @@
+{
+  "info": {
+    "name": "School Management API",
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
+    "description": "Collection for testing School Management APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Add School",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Greenwood High\",\n    \"address\": \"123 Main St, City\",\n    \"latitude\": 40.7128,\n    \"longitude\": -74.0060\n}"
+        },
+        "url": {
+          "raw": "https://educase-jnxm.onrender.com/api/addSchool",
+          "protocol": "https",
+          "host": ["educase-jnxm", "onrender", "com"],
+          "path": ["api", "addSchool"]
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "Created",
+          "code": 201,
+          "body": "{\n    \"message\": \"School added successfully\"\n}"
+        },
+        {
+          "name": "Validation Error",
+          "status": "Bad Request",
+          "code": 400,
+          "body": "{\n    \"error\": \"Invalid name/address/coordinates\"\n}"
+        },
+        {
+          "name": "Server Error",
+          "status": "Internal Server Error",
+          "code": 500,
+          "body": "{\n    \"error\": \"Database error\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "List Schools",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://educase-jnxm.onrender.com/api/listSchools?lat=40.730610&lon=-73.935242",
+          "protocol": "https",
+          "host": ["educase-jnxm", "onrender", "com"],
+          "path": ["api", "listSchools"],
+          "query": [
+            { "key": "lat", "value": "40.730610" },
+            { "key": "lon", "value": "-73.935242" }
+          ]
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Greenwood High\",\n    \"address\": \"123 Main St, City\",\n    \"latitude\": 40.7128,\n    \"longitude\": -74.0060,\n    \"distance_km\": 7.2\n  }\n]"
+        },
+        {
+          "name": "Validation Error",
+          "status": "Bad Request",
+          "code": 400,
+          "body": "{\n    \"error\": \"Latitude and longitude required\"\n}"
+        },
+        {
+          "name": "Server Error",
+          "status": "Internal Server Error",
+          "code": 500,
+          "body": "{\n    \"error\": \"Database error\"\n}"
+        }
+      ]
+    }
+  ]
+}
